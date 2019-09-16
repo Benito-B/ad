@@ -1,2 +1,6 @@
 Cuenta github profesor: https://github.com/luisvelasco1920/ad.git
+Configuración global de git:
+    git config --global user.name "BenitoB"
+    git config --global user.email Benitobarreiro89@gmail.com
+Comprobarla con git config --list
 
