@@ -1,6 +1,6 @@
 ﻿using System.Data;
 
-namespace Serpis.ad {
+namespace CSerpisAd {
     public class DbCommandHelper {
 
         public static void AddParameter(IDbCommand dbCommand, string name, object value) {

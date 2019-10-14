@@ -35,12 +35,13 @@ namespace CSerpisAd {
                 foreach (string label in labels) {
                     Console.WriteLine(label);
                 }
+                Console.WriteLine("Elige una opción: ");
                 string option = Console.ReadLine();
-                if (actions.ContainsKey(option)) {
+
+                if (actions.ContainsKey(option))
                     actions[option]();
-                } else {
+                else
                     Console.WriteLine("Esa opción no existe, porfavor elige otra.");
-                }
             }
 
         }
