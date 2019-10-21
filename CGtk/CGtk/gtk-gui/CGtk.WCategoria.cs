@@ -23,7 +23,7 @@ namespace CGtk
 			global::Stetic.Gui.Initialize(this);
 			// Widget CGtk.WCategoria
 			this.Name = "CGtk.WCategoria";
-			this.Title = global::Mono.Unix.Catalog.GetString("WCategoria");
+			this.Title = global::Mono.Unix.Catalog.GetString("Añadir categoría");
 			this.WindowPosition = ((global::Gtk.WindowPosition)(4));
 			// Container child CGtk.WCategoria.Gtk.Container+ContainerChild
 			this.vbox1 = new global::Gtk.VBox();
@@ -60,7 +60,6 @@ namespace CGtk
 			w3.Fill = false;
 			// Container child vbox1.Gtk.Box+BoxChild
 			this.hbuttonbox1 = new global::Gtk.HButtonBox();
-			this.hbuttonbox1.Name = "hbuttonbox1";
 			this.hbuttonbox1.LayoutStyle = ((global::Gtk.ButtonBoxStyle)(1));
 			// Container child hbuttonbox1.Gtk.ButtonBox+ButtonBoxChild
 			this.btExit = new global::Gtk.Button();

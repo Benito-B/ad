@@ -1,7 +1,7 @@
 ﻿using System;
 using Gtk;
 
-namespace CGtk {
+namespace CGtk.Articulo {
     class MainClass {
         public static void Main(string[] args) {
             Application.Init();

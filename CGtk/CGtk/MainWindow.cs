@@ -1,22 +1,36 @@
 ﻿using System;
 using Gtk;
 using CGtk;
-public partial class MainWindow : Gtk.Window {
-    public MainWindow() : base(Gtk.WindowType.Toplevel) {
-        Build();
+using CSerpisAd.GtkHelper;
+using System.Collections.Generic;
 
-        treeView.AppendColumn("id", new CellRendererText(), "text", 0);
-        treeView.AppendColumn("nombre", new CellRendererText(), "text", 1);
+namespace CGtk.Articulo {
 
-        ListStore listStore = new ListStore(typeof(String), typeof(String));
-        treeView.Model = listStore;
-        listStore.AppendValues("1", "Cat1");
+    public partial class MainWindow : Gtk.Window {
+        public MainWindow() : base(Gtk.WindowType.Toplevel) {
+            Build();
 
-        addAction.Activated += (sender, e) => new WCategoria();
-    }
+            ICollection<Article> articles = new List<Article>();
+            articles = ArticleDAO.GetArticles();
 
-    protected void OnDeleteEvent(object sender, DeleteEventArgs a) {
-        Application.Quit();
-        a.RetVal = true;
+            TreeViewHelper.Fill(treeView, new string[] { "Id", "Name", "Category", "Price" }, articles);
+
+            addAction.Activated += (sender, e) => new DialogCreateArticle();
+
+            treeView.Selection.Changed += (sender, e) => refreshActions();
+
+            refreshActions();
+        }
+
+        protected void OnDeleteEvent(object sender, DeleteEventArgs a) {
+            Application.Quit();
+            a.RetVal = true;
+        }
+
+        private void refreshActions() {
+            bool hasSelected = treeView.Selection.CountSelectedRows() > 0;
+            editAction.Sensitive = hasSelected;
+            removeAction.Sensitive = hasSelected;
+        }
     }
 }
