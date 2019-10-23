@@ -10,14 +10,12 @@ namespace CGtk.Articulo {
         public MainWindow() : base(Gtk.WindowType.Toplevel) {
             Build();
 
-            ICollection<Article> articles = new List<Article>();
-            articles = ArticleDAO.GetArticles();
-
+            ICollection<Article> articles = ArticleDAO.GetAll();
             TreeViewHelper.Fill(treeView, new string[] { "Id", "Name", "Category", "Price" }, articles);
-
-            addAction.Activated += (sender, e) => new DialogCreateArticle();
-
             treeView.Selection.Changed += (sender, e) => refreshActions();
+
+            addAction.Activated += (sender, e) => new WArticle();
+            createCategory.Activated += (sender, e) => {WCategoria wCategoria = new WCategoria(new Categoria());};
 
             refreshActions();
         }

@@ -70,13 +70,13 @@
     <Compile Include="WCategoria.cs" />
     <Compile Include="gtk-gui\CGtk.WCategoria.cs" />
     <Compile Include="gtk-gui\CGtk.Articulo.MainWindow.cs" />
-    <Compile Include="DialogCreateArticle.cs" />
-    <Compile Include="gtk-gui\CGtk.DialogCreateArticle.cs" />
     <Compile Include="CategoryDAO.cs" />
     <Compile Include="DbConn.cs" />
     <Compile Include="Category.cs" />
     <Compile Include="ArticleDAO.cs" />
     <Compile Include="Article.cs" />
+    <Compile Include="WArticle.cs" />
+    <Compile Include="gtk-gui\CGtk.WArticle.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>

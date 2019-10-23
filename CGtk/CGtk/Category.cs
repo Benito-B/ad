@@ -1,10 +1,13 @@
 ﻿using System;
 namespace CGtk{
     public class Categoria {
+
         public Categoria(string name, ulong id) {
             this.name = name;
             this.id = id;
         }
+
+        public Categoria() { }
 
         private string name;
         private ulong id;

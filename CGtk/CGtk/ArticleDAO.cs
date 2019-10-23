@@ -10,7 +10,7 @@ namespace CGtk {
          * Articulo(id(int),nombre(string),categoria(int),precio(float))
          */
 
-        public static ICollection<Article> GetArticles() {
+        public static ICollection<Article> GetAll() {
             ICollection<Article> articles = new List<Article>();
             IDbConnection dbConn = DbConn.GetInstance().GetConnection();
             IDbCommand dbCommand = dbConn.CreateCommand();
