@@ -48,6 +48,7 @@
     <Compile Include="Menu.cs" />
     <Compile Include="TreeViewHelper.cs" />
     <Compile Include="ItemGenerator.cs" />
+    <Compile Include="Hasher.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>

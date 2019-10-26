@@ -29,11 +29,15 @@ namespace CSerpisAd.GtkHelper {
             }
         }
 
+		public static object GetSelected(TreeView treeView){
+			if (!treeView.Selection.GetSelected (out TreeIter iter))
+				return null;
+			return treeView.Model.GetValue (iter, 0);
+		}
 
-        public static object GetId(TreeView treeView) {
-            if (!treeView.Selection.GetSelected(out TreeIter iter))
-                return null;
-            object obj = treeView.Model.GetValue(iter, 0);
+
+		public static object GetId(TreeView treeView) {
+			object obj = GetSelected (treeView);
             return obj.GetType().GetProperty("Id").GetValue(obj);
         }
     }

@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
+    <ProjectGuid>{A4A1B736-2EB8-4F8B-808C-9AECD91E57F2}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <RootNamespace>CutreGest</RootNamespace>
+    <AssemblyName>CutreGest</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug</OutputPath>
+    <DefineConstants>DEBUG;</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>false</ConsolePause>
+    <PlatformTarget>x86</PlatformTarget>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+    <DebugType>full</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release</OutputPath>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>false</ConsolePause>
+    <PlatformTarget>x86</PlatformTarget>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="gtk-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f">
+      <SpecificVersion>False</SpecificVersion>
+      <Package>gtk-sharp-2.0</Package>
+    </Reference>
+    <Reference Include="gdk-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f">
+      <SpecificVersion>False</SpecificVersion>
+      <Package>gtk-sharp-2.0</Package>
+    </Reference>
+    <Reference Include="glib-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f">
+      <SpecificVersion>False</SpecificVersion>
+      <Package>glib-sharp-2.0</Package>
+    </Reference>
+    <Reference Include="glade-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f">
+      <SpecificVersion>False</SpecificVersion>
+      <Package>glade-sharp-2.0</Package>
+    </Reference>
+    <Reference Include="pango-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f">
+      <SpecificVersion>False</SpecificVersion>
+      <Package>gtk-sharp-2.0</Package>
+    </Reference>
+    <Reference Include="atk-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f">
+      <SpecificVersion>False</SpecificVersion>
+      <Package>gtk-sharp-2.0</Package>
+    </Reference>
+    <Reference Include="Mono.Posix" />
+    <Reference Include="Renci.SshNet">
+      <HintPath>..\..\mysqldata\Renci.SshNet.dll</HintPath>
+    </Reference>
+    <Reference Include="MySql.Data">
+      <HintPath>..\..\mysqldata\MySql.Data.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Data" />
+    <Reference Include="CSerpisAd">
+      <HintPath>..\..\CSerpisAd\CSerpisAd\bin\Debug\CSerpisAd.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="gtk-gui\gui.stetic">
+      <LogicalName>gui.stetic</LogicalName>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="gtk-gui\generated.cs" />
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="model\LoginUser.cs" />
+    <Compile Include="model\User.cs" />
+    <Compile Include="gtk-gui\MainWindow.cs" />
+    <Compile Include="MainWindow.cs" />
+    <Compile Include="logic\DbConn.cs" />
+    <Compile Include="view\windows\DialogHelper.cs" />
+    <Compile Include="view\windows\ListArticleWindow.cs" />
+    <Compile Include="gtk-gui\CutreGest.view.windows.ListArticleWindow.cs" />
+    <Compile Include="view\windows\ArticleWindow.cs" />
+    <Compile Include="gtk-gui\CutreGest.view.windows.ArticleWindow.cs" />
+    <Compile Include="model\Article.cs" />
+    <Compile Include="model\Category.cs" />
+    <Compile Include="model\Stock.cs" />
+    <Compile Include="dao\ArticleDAO.cs" />
+    <Compile Include="dao\CategoryDAO.cs" />
+    <Compile Include="dao\StockDAO.cs" />
+    <Compile Include="dao\UserDAO.cs" />
+    <Compile Include="view\windows\CategoryWindow.cs" />
+    <Compile Include="gtk-gui\CutreGest.view.windows.CategoryWindow.cs" />
+    <Compile Include="view\windows\ListCategoryWindow.cs" />
+    <Compile Include="gtk-gui\CutreGest.view.windows.ListCategoryWindow.cs" />
+    <Compile Include="view\windows\ListUserWindow.cs" />
+    <Compile Include="gtk-gui\CutreGest.view.windows.ListUserWindow.cs" />
+    <Compile Include="view\windows\UserWindow.cs" />
+    <Compile Include="gtk-gui\CutreGest.view.windows.UserWindow.cs" />
+    <Compile Include="model\Movement.cs" />
+    <Compile Include="dao\MovementDAO.cs" />
+    <Compile Include="view\windows\ListMovementWindow.cs" />
+    <Compile Include="gtk-gui\CutreGest.view.windows.ListMovementWindow.cs" />
+    <Compile Include="logic\Warehouse.cs" />
+    <Compile Include="view\windows\MovementWindow.cs" />
+    <Compile Include="gtk-gui\CutreGest.view.windows.MovementWindow.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="model\" />
+    <Folder Include="view\" />
+    <Folder Include="view\windows\" />
+    <Folder Include="logic\" />
+    <Folder Include="dao\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="dbgest.sql" />
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+</Project>

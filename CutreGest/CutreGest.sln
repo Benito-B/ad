@@ -1,0 +1,43 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CutreGest", "CutreGest\CutreGest.csproj", "{A4A1B736-2EB8-4F8B-808C-9AECD91E57F2}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x86 = Debug|x86
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A4A1B736-2EB8-4F8B-808C-9AECD91E57F2}.Debug|x86.ActiveCfg = Debug|x86
+		{A4A1B736-2EB8-4F8B-808C-9AECD91E57F2}.Debug|x86.Build.0 = Debug|x86
+		{A4A1B736-2EB8-4F8B-808C-9AECD91E57F2}.Release|x86.ActiveCfg = Release|x86
+		{A4A1B736-2EB8-4F8B-808C-9AECD91E57F2}.Release|x86.Build.0 = Release|x86
+	EndGlobalSection
+	GlobalSection(MonoDevelopProperties) = preSolution
+		Policies = $0
+		$0.DotNetNamingPolicy = $1
+		$1.DirectoryNamespaceAssociation = PrefixedHierarchical
+		$0.TextStylePolicy = $2
+		$2.FileWidth = 80
+		$2.TabsToSpaces = True
+		$2.scope = text/plain
+		$0.TextStylePolicy = $3
+		$3.inheritsSet = null
+		$3.scope = text/x-csharp
+		$0.CSharpFormattingPolicy = $4
+		$4.NewLinesForBracesInTypes = False
+		$4.NewLinesForBracesInMethods = False
+		$4.NewLinesForBracesInProperties = False
+		$4.NewLinesForBracesInAccessors = False
+		$4.NewLinesForBracesInAnonymousMethods = False
+		$4.NewLinesForBracesInControlBlocks = False
+		$4.NewLinesForBracesInAnonymousTypes = False
+		$4.NewLinesForBracesInObjectCollectionArrayInitializers = False
+		$4.NewLinesForBracesInLambdaExpressionBody = False
+		$4.NewLineForElse = False
+		$4.NewLineForCatch = False
+		$4.NewLineForFinally = False
+		$4.scope = text/x-csharp
+	EndGlobalSection
+EndGlobal
