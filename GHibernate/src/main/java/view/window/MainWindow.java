@@ -1,7 +1,11 @@
 package view.window;
 
+import model.User;
+import view.menu.MainMenu;
+
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
@@ -23,6 +27,7 @@ public class MainWindow extends JFrame {
         //También cojo el GraphicsDevice que me permite mostrar la ventana como fullscreen
         GraphicsDevice device = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
         device.setFullScreenWindow(this);
+        this.setJMenuBar(new MainMenu(new User()));//TODO sustituir este user por uno sacado de la ventana de login
         this.setVisible(true);
     }
 }
