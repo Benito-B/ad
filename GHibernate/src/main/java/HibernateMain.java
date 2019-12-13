@@ -1,4 +1,5 @@
 import model.Categoria;
+import view.window.LoginWindow;
 import view.window.MainWindow;
 
 import javax.persistence.EntityManager;
@@ -8,11 +9,9 @@ import javax.persistence.Persistence;
 public class HibernateMain {
 
     public static void main(String[] args) {
-        javax.swing.SwingUtilities.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                MainWindow w = new MainWindow();
-            }
+        javax.swing.SwingUtilities.invokeLater(() -> {
+            //MainWindow w = new MainWindow();
+            LoginWindow l = new LoginWindow();
         });
 
  /*       EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("com.bentie.ghibernate");

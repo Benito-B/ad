@@ -1,16 +1,25 @@
 package model;
 
+import javax.persistence.*;
+
+@Entity
+@Table(name = "users")
 public class User {
 
-    private int userId;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long userId;
+    @Column(name="name")
     private String username;
+    @Column(name = "pass")
+    private String password;
     private boolean isAdmin;
 
-    public int getUserId() {
+    public Long getUserId() {
         return userId;
     }
 
-    public void setUserId(int userId) {
+    public void setUserId(Long userId) {
         this.userId = userId;
     }
 
@@ -20,6 +29,14 @@ public class User {
 
     public void setUsername(String username) {
         this.username = username;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public boolean isAdmin() {

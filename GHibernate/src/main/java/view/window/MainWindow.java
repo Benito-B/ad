@@ -1,5 +1,6 @@
 package view.window;
 
+import controller.dao.UserDAO;
 import model.User;
 import view.menu.MainMenu;
 
@@ -10,12 +11,13 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
 public class MainWindow extends JFrame {
-
+    private User loggedUser;
     /**
      * Constructor de la ventana. La inicia, le setea los valores por defecto y la pone visible.
      * Está a pantalla completa y si se consigue cambiar, estará con un tamaño que ocupa el espacio disponible
      */
-    public MainWindow(){
+    public MainWindow(User loggedUser){
+        this.loggedUser = loggedUser;
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         this.setAlwaysOnTop(true);
         this.setUndecorated(true);
@@ -27,7 +29,7 @@ public class MainWindow extends JFrame {
         //También cojo el GraphicsDevice que me permite mostrar la ventana como fullscreen
         GraphicsDevice device = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
         device.setFullScreenWindow(this);
-        this.setJMenuBar(new MainMenu(new User()));//TODO sustituir este user por uno sacado de la ventana de login
+        this.setJMenuBar(new MainMenu(loggedUser));
         this.setVisible(true);
     }
 }

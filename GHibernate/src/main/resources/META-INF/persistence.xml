@@ -6,14 +6,15 @@
     <persistence-unit name="com.bentie.ghibernate">
 
         <class>model.Categoria</class>
+        <class>model.User</class>
 
         <properties>
-            <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost/dbpruebas" />
+            <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost/dbgesthibernate" />
             <property name="javax.persistence.jdbc.user" value="root" />
             <property name="javax.persistence.jdbc.password" value="sistemas" />
             <property name="hibernate.dialect" value="org.hibernate.dialect.MySQL5Dialect"/>
             <property name="hibernate.show_sql" value="true" />
-            <!-- property name="hibernate.hbm2ddl.auto" value="create" /-->
+            <property name="hibernate.hbm2ddl.auto" value="update" />
         </properties>
 
     </persistence-unit>
