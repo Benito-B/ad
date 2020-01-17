@@ -17,9 +17,10 @@ public class MainWindow extends JFrame {
      * Está a pantalla completa y si se consigue cambiar, estará con un tamaño que ocupa el espacio disponible
      */
     public MainWindow(User loggedUser){
+        super("CutreJest - Principal");
         this.loggedUser = loggedUser;
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
-        this.setAlwaysOnTop(true);
+        this.setAlwaysOnTop(false);
         this.setUndecorated(true);
         this.setExtendedState(JFrame.MAXIMIZED_BOTH);
         //Cojo el entorno para poder obtener los valores de tamaño de la pantalla y se los seteo a la ventana

@@ -1,10 +1,4 @@
-import model.Categoria;
 import view.window.LoginWindow;
-import view.window.MainWindow;
-
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
 
 public class HibernateMain {
 

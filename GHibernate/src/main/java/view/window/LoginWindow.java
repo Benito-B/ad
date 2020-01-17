@@ -14,13 +14,15 @@ public class LoginWindow extends JFrame {
     public LoginWindow(){
         super("CutreJest - Login");
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
-        this.setAlwaysOnTop(true);
+        //this.setAlwaysOnTop(true);
         this.setResizable(false);
+        this.setLocationRelativeTo(null);
         panel = new JPanel();
         panel.setLayout(new GridLayout(3, 2));
         addButtons();
         setContentPane(panel);
         pack();
+        this.setLocation(this.getX() - this.getWidth()/2, this.getY() - this.getHeight()/2);
         this.setVisible(true);
     }
 
@@ -63,5 +65,6 @@ public class LoginWindow extends JFrame {
             }
         });
         panel.add(btLogin);
+        this.getRootPane().setDefaultButton(btLogin);
     }
 }
