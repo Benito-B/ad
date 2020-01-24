@@ -6,6 +6,11 @@
     <persistence-unit name="com.bentie.ghibernate">
 
         <class>model.User</class>
+        <class>model.Article</class>
+        <class>model.Category</class>
+        <class>model.Client</class>
+        <class>model.Order</class>
+        <class>model.OrderLine</class>
 
         <properties>
             <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost/dbgesthibernate" />

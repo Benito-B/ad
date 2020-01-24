@@ -12,6 +12,9 @@ public class Client {
 	@Column(name = "nombre")
 	private String name;
 
+	@Transient
+	private String[] editableFields = {"name"};
+
 	public Long getId() {
 		return id;
 	}

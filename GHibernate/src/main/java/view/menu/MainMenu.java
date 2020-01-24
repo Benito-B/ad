@@ -1,5 +1,9 @@
 package view.menu;
 
+import controller.dao.ArticleDAO;
+import controller.dao.CategoryDAO;
+import controller.dao.ClientDAO;
+import controller.dao.UserDAO;
 import model.Article;
 import model.Category;
 import model.Client;
@@ -22,8 +26,8 @@ public class MainMenu extends JMenuBar{
         this.add(jmCategories);
         JMenuItem miListCategories = new JMenuItem("Listar categorías");
         miListCategories.addActionListener(e -> {
-            //TODO sacar categorías de la DB
-            List<Category> categories = new ArrayList<>();
+            CategoryDAO categoryDAO = new CategoryDAO();
+            List<Category> categories = categoryDAO.getAll();
             String[] fieldsToPrint = {"id", "name"};
             ListItemsWindow<Category> categoryWindow = new ListItemsWindow<>(categories, Category.class, fieldsToPrint);
         });
@@ -37,8 +41,8 @@ public class MainMenu extends JMenuBar{
         miListArticles.addActionListener(new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                //TODO sacar artículos de la DB
-                List<Article> articles = new ArrayList<>();
+                ArticleDAO articleDAO = new ArticleDAO();
+                List<Article> articles = articleDAO.getAll();
                 String[] fieldsToPrint = {"id", "name", "price", "category"};
                 ListItemsWindow<Article> articlesWindow = new ListItemsWindow<>(articles, Article.class, fieldsToPrint);
             }
@@ -68,8 +72,8 @@ public class MainMenu extends JMenuBar{
         miListClients.addActionListener(new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                //TODO sacar artículos de la DB
-                List<Client> clients = new ArrayList<>();
+                ClientDAO clientDAO = new ClientDAO();
+                List<Client> clients = clientDAO.getAll();
                 String[] fieldsToPrint = {"id", "name"};
                 ListItemsWindow<Client> articlesWindow = new ListItemsWindow<>(clients, Client.class, fieldsToPrint);
             }
@@ -81,8 +85,9 @@ public class MainMenu extends JMenuBar{
             JMenu jmUsers = new JMenu("Usuarios");
             JMenuItem miListUsers = new JMenuItem("Listar usuarios");
             miListUsers.addActionListener(evt -> {
-                System.out.println("Listando usuarios");
-                //TODO listar usuarios
+                UserDAO userDAO = new UserDAO();
+                String[] fieldsToPrint = {"userId", "username", "isAdmin"};
+                ListItemsWindow<User> userWindow = new ListItemsWindow<>(userDAO.getAll(), User.class, fieldsToPrint);
             });
             jmUsers.add(miListUsers);
             this.add(jmUsers);

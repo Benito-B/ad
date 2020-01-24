@@ -21,7 +21,7 @@ public class Order {
 	@ManyToOne
 	@JoinColumn(name = "cliente")
 	private Client client;
-	@OneToMany(mappedBy = "pedido", cascade = CascadeType.ALL, orphanRemoval = true)
+	@OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<OrderLine> orderLines = new ArrayList<>();
 
 

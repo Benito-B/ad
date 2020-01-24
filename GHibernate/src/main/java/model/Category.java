@@ -28,6 +28,9 @@ public class Category {
 		this.name = name;
 	}
 
+	@Transient
+	private String[] editableFields = {"name"};
+
 	@Override
 	public String toString() {
 		return name;

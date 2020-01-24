@@ -11,11 +11,9 @@ public class OrderLine {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	@Column(name = "pedido")
 	@ManyToOne
 	@JoinColumn(name = "pedido")
 	private Order order;
-	@Column(name = "articulo")
 	@ManyToOne
 	@JoinColumn(name = "articulo")
 	private Article article;

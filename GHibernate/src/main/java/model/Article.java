@@ -15,10 +15,12 @@ public class Article {
 	private String name;
 	@Column(name="precio")
 	private BigDecimal price;
-	@Column(name="categoria")
 	@ManyToOne
 	@JoinColumn(name = "categoria")
 	private Category category;
+	//Transient hace que hibernate lo ignore
+	@Transient
+	private String[] editableFields = {"name", "price", "category"};
 
 	public Long getId() {
 		return id;
