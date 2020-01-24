@@ -1,13 +1,13 @@
 package view.window;
 
-import javax.persistence.EntityManager;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Vector;
 
 public class ListItemsWindow<T> extends JDialog {
 
@@ -48,13 +48,22 @@ public class ListItemsWindow<T> extends JDialog {
                 }
                 String info = String.valueOf(f.get(item));
                 data[i][j] = info;
-                System.out.println("i: " + i + " j : " + j + " field: " + f.getName());
+//                System.out.println("i: " + i + " j : " + j + " field: " + f.getName());
                 j++;
             }
             i++;
         }
         innerTable = new JTable(data, fieldsToPrint.toArray());
         innerTable.setFillsViewportHeight(true);
+        innerTable.setDefaultEditor(Object.class, null);
+        innerTable.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+                JTable t = (JTable)e.getSource();
+
+                System.out.println(items.get(t.rowAtPoint(e.getPoint())));
+            }
+        });
         scrollPane = new JScrollPane(innerTable);
         base.add(scrollPane);
     }

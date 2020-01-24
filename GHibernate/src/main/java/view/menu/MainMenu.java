@@ -1,6 +1,8 @@
 package view.menu;
 
 import model.Article;
+import model.Category;
+import model.Client;
 import model.User;
 import view.window.ListItemsWindow;
 
@@ -15,6 +17,18 @@ public class MainMenu extends JMenuBar{
 
     public MainMenu(User loggedUser){
         this.loggedUser = loggedUser;
+        //Submenú categorías
+        JMenu jmCategories = new JMenu("Categorías");
+        this.add(jmCategories);
+        JMenuItem miListCategories = new JMenuItem("Listar categorías");
+        miListCategories.addActionListener(e -> {
+            //TODO sacar categorías de la DB
+            List<Category> categories = new ArrayList<>();
+            String[] fieldsToPrint = {"id", "name"};
+            ListItemsWindow<Category> categoryWindow = new ListItemsWindow<>(categories, Category.class, fieldsToPrint);
+        });
+        jmCategories.add(miListCategories);
+
         //Creo el submenú de Artículos
         JMenu jmArticles = new JMenu("Artículos");
         this.add(jmArticles);
@@ -23,15 +37,45 @@ public class MainMenu extends JMenuBar{
         miListArticles.addActionListener(new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                //TODO listar artículos
+                //TODO sacar artículos de la DB
                 List<Article> articles = new ArrayList<>();
-                articles.add(new Article(1L, "test"));
-                articles.add(new Article(2L, "test2"));
-                String[] fieldsToPrint = {"id", "name"};
+                String[] fieldsToPrint = {"id", "name", "price", "category"};
                 ListItemsWindow<Article> articlesWindow = new ListItemsWindow<>(articles, Article.class, fieldsToPrint);
             }
         });
         jmArticles.add(miListArticles);
+
+        //Creo el submenú de Pedidos
+        JMenu jmOrders = new JMenu("Pedidos");
+        this.add(jmOrders);
+        //Creo la opción para listar artículos y la añado al submenú correspondiente
+        JMenuItem miListOrders = new JMenuItem("Listar pedidos");
+        miListOrders.addActionListener(new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                //TODO sacar artículos de la DB
+                List<Article> articles = new ArrayList<>();
+                //TODO crear ventana para mostrar pedidos
+            }
+        });
+        jmOrders.add(miListOrders);
+
+        //Creo el submenú de Clientes
+        JMenu jmClients = new JMenu("Clientes");
+        this.add(jmClients);
+        //Creo la opción para listar artículos y la añado al submenú correspondiente
+        JMenuItem miListClients = new JMenuItem("Listar clientes");
+        miListClients.addActionListener(new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                //TODO sacar artículos de la DB
+                List<Client> clients = new ArrayList<>();
+                String[] fieldsToPrint = {"id", "name"};
+                ListItemsWindow<Client> articlesWindow = new ListItemsWindow<>(clients, Client.class, fieldsToPrint);
+            }
+        });
+        jmClients.add(miListClients);
+
         //Manejar usuarios - SOLO ADMIN
         if(loggedUser.isAdmin()) {
             JMenu jmUsers = new JMenu("Usuarios");

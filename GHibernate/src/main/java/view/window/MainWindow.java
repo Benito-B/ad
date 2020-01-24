@@ -24,12 +24,12 @@ public class MainWindow extends JFrame {
         this.setUndecorated(true);
         this.setExtendedState(JFrame.MAXIMIZED_BOTH);
         //Cojo el entorno para poder obtener los valores de tamaño de la pantalla y se los seteo a la ventana
-        GraphicsEnvironment env = GraphicsEnvironment.getLocalGraphicsEnvironment();
-        this.setMaximizedBounds(env.getMaximumWindowBounds());
-        this.setSize(env.getMaximumWindowBounds().width, env.getMaximumWindowBounds().height);
-        //También cojo el GraphicsDevice que me permite mostrar la ventana como fullscreen
-        GraphicsDevice device = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
-        device.setFullScreenWindow(this);
+//        GraphicsEnvironment env = GraphicsEnvironment.getLocalGraphicsEnvironment();
+//        this.setMaximizedBounds(env.getMaximumWindowBounds());
+//        this.setSize(env.getMaximumWindowBounds().width, env.getMaximumWindowBounds().height);
+//        //También cojo el GraphicsDevice que me permite mostrar la ventana como fullscreen
+//        GraphicsDevice device = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
+//        device.setFullScreenWindow(this);
         this.setJMenuBar(new MainMenu(loggedUser));
         this.setVisible(true);
     }
