@@ -10,4 +10,9 @@ public class CategoryDAO extends PersistenceDAO<Category> {
     public List<Category> getAll() {
         return EntityManagerHelper.getInstance().getEntityManager().createQuery("from Category order by Id", Category.class).getResultList();
     }
+
+    @Override
+    public Category findById(long id) {
+        return EntityManagerHelper.getInstance().getEntityManager().find(Category.class, id);
+    }
 }

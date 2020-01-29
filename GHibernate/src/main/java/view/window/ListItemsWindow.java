@@ -1,5 +1,10 @@
 package view.window;
 
+import model.Article;
+import model.Category;
+import model.Client;
+import model.Order;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
@@ -59,10 +64,21 @@ public class ListItemsWindow<T> extends JDialog {
         innerTable.addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
+                if(e.getClickCount() != 2)
+                    return;
                 JTable t = (JTable)e.getSource();
-
-                System.out.println(items.get(t.rowAtPoint(e.getPoint())));
+                try {
+                    Field f = c.getDeclaredField("id");
+                    Object o = items.get(t.rowAtPoint(e.getPoint()));
+                    if(Modifier.isPrivate(f.getModifiers()))
+                        f.setAccessible(true);
+                    EditItemWindow<T> itemWindow = new EditItemWindow<T>(o);
+                } catch (NoSuchFieldException ex) {
+                    ex.printStackTrace();
+                }
             }
+
+
         });
         scrollPane = new JScrollPane(innerTable);
         base.add(scrollPane);

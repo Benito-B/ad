@@ -30,4 +30,9 @@ public class UserDAO extends PersistenceDAO<User> {
     public List<User> getAll() {
         return EntityManagerHelper.getInstance().getEntityManager().createQuery("from User order by userId", User.class).getResultList();
     }
+
+    @Override
+    public User findById(long id) {
+        return EntityManagerHelper.getInstance().getEntityManager().find(User.class, id);
+    }
 }

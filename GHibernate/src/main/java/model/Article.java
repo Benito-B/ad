@@ -6,7 +6,7 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "articulo")
-public class Article {
+public class Article implements EditableItem{
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -18,9 +18,6 @@ public class Article {
 	@ManyToOne
 	@JoinColumn(name = "categoria")
 	private Category category;
-	//Transient hace que hibernate lo ignore
-	@Transient
-	private String[] editableFields = {"name", "price", "category"};
 
 	public Long getId() {
 		return id;

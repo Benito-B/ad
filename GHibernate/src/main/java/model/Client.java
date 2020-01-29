@@ -4,16 +4,13 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "cliente")
-public class Client {
+public class Client implements EditableItem{
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	@Column(name = "nombre")
 	private String name;
-
-	@Transient
-	private String[] editableFields = {"name"};
 
 	public Long getId() {
 		return id;

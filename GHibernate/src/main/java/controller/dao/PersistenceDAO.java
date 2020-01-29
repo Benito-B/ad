@@ -1,6 +1,7 @@
 package controller.dao;
 
 import controller.EntityManagerHelper;
+import model.Client;
 
 import java.util.List;
 
@@ -17,5 +18,7 @@ public abstract class PersistenceDAO <T>{
         EntityManagerHelper.getInstance().getEntityManager().persist(object);
         EntityManagerHelper.getInstance().commitTransaction();
     }
+
+    public abstract T findById(long id);
 
 }

@@ -4,7 +4,7 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "categoria")
-public class Category {
+public class Category implements EditableItem{
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,9 +27,6 @@ public class Category {
 	public void setName(String name) {
 		this.name = name;
 	}
-
-	@Transient
-	private String[] editableFields = {"name"};
 
 	@Override
 	public String toString() {
