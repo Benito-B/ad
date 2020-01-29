@@ -8,9 +8,11 @@ import model.Article;
 import model.Category;
 import model.Client;
 import model.User;
+import view.window.EditItemWindow;
 import view.window.ListItemsWindow;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.util.ArrayList;
 import java.util.List;
@@ -32,6 +34,11 @@ public class MainMenu extends JMenuBar{
             ListItemsWindow<Category> categoryWindow = new ListItemsWindow<>(categories, Category.class, fieldsToPrint);
         });
         jmCategories.add(miListCategories);
+        JMenuItem miCreateCategory = new JMenuItem("Crear categoría");
+        miCreateCategory.addActionListener(e -> {
+            EditItemWindow<Category> catWindow = new EditItemWindow<>(new Category(), (Window)getTopLevelAncestor());
+        });
+        jmCategories.add(miCreateCategory);
 
         //Creo el submenú de Artículos
         JMenu jmArticles = new JMenu("Artículos");
@@ -48,6 +55,11 @@ public class MainMenu extends JMenuBar{
             }
         });
         jmArticles.add(miListArticles);
+        JMenuItem miCreateArticle = new JMenuItem("Crear Artículo");
+        miCreateArticle.addActionListener(e -> {
+            EditItemWindow<Article> articleWindow = new EditItemWindow<>(new Article(), (Window)getTopLevelAncestor());
+        });
+        jmArticles.add(miCreateArticle);
 
         //Creo el submenú de Pedidos
         JMenu jmOrders = new JMenu("Pedidos");
@@ -57,8 +69,7 @@ public class MainMenu extends JMenuBar{
         miListOrders.addActionListener(new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                //TODO sacar artículos de la DB
-                List<Article> articles = new ArrayList<>();
+                //TODO sacar pedidos de la DB
                 //TODO crear ventana para mostrar pedidos
             }
         });
@@ -79,6 +90,11 @@ public class MainMenu extends JMenuBar{
             }
         });
         jmClients.add(miListClients);
+        JMenuItem miCreateClient = new JMenuItem("Crear Cliente");
+        miCreateClient.addActionListener(e -> {
+            EditItemWindow<Client> clientWindow = new EditItemWindow<>(new Client(), (Window)getTopLevelAncestor());
+        });
+        jmClients.add(miCreateClient);
 
         //Manejar usuarios - SOLO ADMIN
         if(loggedUser.isAdmin()) {
