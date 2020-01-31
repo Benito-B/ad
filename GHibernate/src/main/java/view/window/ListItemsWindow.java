@@ -52,32 +52,44 @@ public class ListItemsWindow<T> extends JDialog {
         JPanel base = new JPanel();
         this.add(base);
         base.setLayout(new GridBagLayout());
-        GridBagConstraints c = new GridBagConstraints();
-        c.fill = GridBagConstraints.BOTH;
-        c.gridx = 0;
-        c.gridy = 0;
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.fill = GridBagConstraints.BOTH;
+        gbc.gridx = 0;
+        gbc.gridy = 0;
         reloadData(items);
         scrollPane = new JScrollPane(innerTable);
-        base.add(scrollPane, c);
+        base.add(scrollPane, gbc);
         JPanel buttonPanel = new JPanel();
         buttonPanel.setLayout(new GridLayout(1, 2));
-        JButton backButton = new JButton("Volver");
+        JButton backButton = new JButton("Nuevo objeto");
         backButton.addActionListener(e -> {
-            this.dispose();
+            try {
+                EditItemWindow<T> itemWindow = new EditItemWindow<>(c.newInstance(), ListItemsWindow.this);
+            } catch (InstantiationException | IllegalAccessException ex) {
+                ex.printStackTrace();
+            }
         });
         buttonPanel.add(backButton);
         btDelete = new JButton("Borrar seleccionado");
         btDelete.addActionListener(e -> {
             int selectedRow = innerTable.getSelectedRow();
-            if(selectedRow > 0)
-                dao.delete(items.get(selectedRow));
+            if(selectedRow > 0 && selectedRow < innerTable.getRowCount()) {
+                T object = items.get(selectedRow);
+                dao.delete(object);
+                items.remove(object);
+                reloadData(items);
+            }
         });
         btDelete.setEnabled(false);
         buttonPanel.add(btDelete);
-        c.fill = GridBagConstraints.BOTH;
-        c.gridx = 0;
-        c.gridy = 1;
-        base.add(buttonPanel, c);
+        gbc.fill = GridBagConstraints.BOTH;
+        gbc.gridx = 0;
+        gbc.gridy = 1;
+        base.add(buttonPanel, gbc);
+    }
+
+    public void addItem(T item){
+        items.add(item);
     }
 
     public void reloadData(List<T> items){

@@ -154,6 +154,7 @@ public class EditItemWindow<T> extends JDialog {
         dao.persist(receivedObject);
         if(parent instanceof ListItemsWindow) {
             parent.setEnabled(true);
+            ((ListItemsWindow) parent).addItem(receivedObject);
             ((ListItemsWindow) parent).reloadData(dao.getAll());
         }
         dispose();
