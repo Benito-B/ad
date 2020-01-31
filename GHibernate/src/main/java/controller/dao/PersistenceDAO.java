@@ -21,4 +21,10 @@ public abstract class PersistenceDAO <T>{
 
     public abstract T findById(long id);
 
+    public void delete(T object){
+        EntityManagerHelper.getInstance().beginTransaction();
+        EntityManagerHelper.getInstance().getEntityManager().remove(object);
+        EntityManagerHelper.getInstance().commitTransaction();
+    }
+
 }
