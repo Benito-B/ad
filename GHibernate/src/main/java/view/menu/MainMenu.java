@@ -1,13 +1,7 @@
 package view.menu;
 
-import controller.dao.ArticleDAO;
-import controller.dao.CategoryDAO;
-import controller.dao.ClientDAO;
-import controller.dao.UserDAO;
-import model.Article;
-import model.Category;
-import model.Client;
-import model.User;
+import controller.dao.*;
+import model.*;
 import view.window.EditItemWindow;
 import view.window.ListItemsWindow;
 

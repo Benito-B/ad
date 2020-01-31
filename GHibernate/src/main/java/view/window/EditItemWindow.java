@@ -109,6 +109,9 @@ public class EditItemWindow<T> extends JDialog {
                     }else{
                         innerDAO = new ArticleDAO();
                     }
+                    if(f.getType().equals(List.class)){
+                        System.out.println("HEY, THIS IS A FUCKING LINE BRO");
+                    }
                     JComboBox comboBox = new JComboBox(innerDAO.getAll().toArray());
                     base.add(comboBox);
                     jFields.put(f.getName(), comboBox);
