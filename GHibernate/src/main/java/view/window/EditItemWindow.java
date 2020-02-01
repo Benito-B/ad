@@ -150,6 +150,7 @@ public class EditItemWindow<T> extends JDialog {
         base.add(btAccept);
         pack();
         this.setAlwaysOnTop(true);
+        this.setResizable(false);
         this.setVisible(true);
     }
 

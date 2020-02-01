@@ -2,21 +2,28 @@ package view.menu;
 
 import controller.dao.*;
 import model.*;
+import view.WindowType;
 import view.window.EditItemWindow;
 import view.window.ListItemsWindow;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class MainMenu extends JMenuBar{
 
     private User loggedUser;
+    private final Map<WindowType, JDialog> itemWindows;
 
     public MainMenu(User loggedUser){
         this.loggedUser = loggedUser;
+        this.itemWindows = new HashMap<>();
         //Submenú categorías
         JMenu jmCategories = new JMenu("Categorías");
         this.add(jmCategories);
@@ -25,12 +32,34 @@ public class MainMenu extends JMenuBar{
             CategoryDAO categoryDAO = new CategoryDAO();
             List<Category> categories = categoryDAO.getAll();
             String[] fieldsToPrint = {"id", "name"};
-            ListItemsWindow<Category> categoryWindow = new ListItemsWindow<>(categories, Category.class, fieldsToPrint);
+            if(itemWindows.containsKey(WindowType.LIST_CATEGORY))
+                itemWindows.get(WindowType.LIST_CATEGORY).requestFocus();
+            else {
+                ListItemsWindow<Category> categoryWindow = new ListItemsWindow<>(categories, Category.class, fieldsToPrint);
+                categoryWindow.addWindowListener(new WindowAdapter() {
+                    @Override
+                    public void windowClosing(WindowEvent e) {
+                        itemWindows.remove(WindowType.LIST_CATEGORY);
+                    }
+                });
+                itemWindows.put(WindowType.LIST_CATEGORY, categoryWindow);
+            }
         });
         jmCategories.add(miListCategories);
         JMenuItem miCreateCategory = new JMenuItem("Crear categoría");
         miCreateCategory.addActionListener(e -> {
-            EditItemWindow<Category> catWindow = new EditItemWindow<>(new Category(), (Window)getTopLevelAncestor());
+            if(itemWindows.containsKey(WindowType.DETAIL_CATEGORY))
+                itemWindows.get(WindowType.DETAIL_CATEGORY).requestFocus();
+            else {
+                EditItemWindow<Category> catWindow = new EditItemWindow<>(new Category(), (Window) getTopLevelAncestor());
+                catWindow.addWindowListener(new WindowAdapter() {
+                    @Override
+                    public void windowClosing(WindowEvent e) {
+                        itemWindows.remove(WindowType.DETAIL_CATEGORY);
+                    }
+                });
+                itemWindows.put(WindowType.DETAIL_CATEGORY, catWindow);
+            }
         });
         jmCategories.add(miCreateCategory);
 
@@ -45,13 +74,35 @@ public class MainMenu extends JMenuBar{
                 ArticleDAO articleDAO = new ArticleDAO();
                 List<Article> articles = articleDAO.getAll();
                 String[] fieldsToPrint = {"id", "name", "price", "category"};
-                ListItemsWindow<Article> articlesWindow = new ListItemsWindow<>(articles, Article.class, fieldsToPrint);
+                if(itemWindows.containsKey(WindowType.LIST_ARTICLE))
+                    itemWindows.get(WindowType.LIST_ARTICLE).requestFocus();
+                else{
+                    ListItemsWindow<Article> articlesWindow = new ListItemsWindow<>(articles, Article.class, fieldsToPrint);
+                    articlesWindow.addWindowListener(new WindowAdapter() {
+                        @Override
+                        public void windowClosing(WindowEvent e) {
+                            itemWindows.remove(WindowType.LIST_ARTICLE);
+                        }
+                    });
+                    itemWindows.put(WindowType.LIST_ARTICLE, articlesWindow);
+                }
             }
         });
         jmArticles.add(miListArticles);
         JMenuItem miCreateArticle = new JMenuItem("Crear Artículo");
         miCreateArticle.addActionListener(e -> {
-            EditItemWindow<Article> articleWindow = new EditItemWindow<>(new Article(), (Window)getTopLevelAncestor());
+            if(itemWindows.containsKey(WindowType.DETAIL_ARTICLE))
+                itemWindows.get(WindowType.DETAIL_ARTICLE).requestFocus();
+            else {
+                EditItemWindow<Article> articleWindow = new EditItemWindow<>(new Article(), (Window) getTopLevelAncestor());
+                articleWindow.addWindowListener(new WindowAdapter() {
+                    @Override
+                    public void windowClosing(WindowEvent e) {
+                        itemWindows.remove(WindowType.DETAIL_ARTICLE);
+                    }
+                });
+                itemWindows.put(WindowType.DETAIL_ARTICLE, articleWindow);
+            }
         });
         jmArticles.add(miCreateArticle);
 
@@ -80,13 +131,35 @@ public class MainMenu extends JMenuBar{
                 ClientDAO clientDAO = new ClientDAO();
                 List<Client> clients = clientDAO.getAll();
                 String[] fieldsToPrint = {"id", "name"};
-                ListItemsWindow<Client> articlesWindow = new ListItemsWindow<>(clients, Client.class, fieldsToPrint);
+                if(itemWindows.containsKey(WindowType.LIST_CLIENT))
+                    itemWindows.get(WindowType.LIST_CLIENT).requestFocus();
+                else {
+                    ListItemsWindow<Client> clientsWindow = new ListItemsWindow<>(clients, Client.class, fieldsToPrint);
+                    clientsWindow.addWindowListener(new WindowAdapter() {
+                        @Override
+                        public void windowClosing(WindowEvent e) {
+                            itemWindows.remove(WindowType.LIST_CLIENT);
+                        }
+                    });
+                    itemWindows.put(WindowType.LIST_CLIENT, clientsWindow);
+                }
             }
         });
         jmClients.add(miListClients);
         JMenuItem miCreateClient = new JMenuItem("Crear Cliente");
         miCreateClient.addActionListener(e -> {
-            EditItemWindow<Client> clientWindow = new EditItemWindow<>(new Client(), (Window)getTopLevelAncestor());
+            if(itemWindows.containsKey(WindowType.DETAIL_CLIENT))
+                itemWindows.get(WindowType.DETAIL_CLIENT).requestFocus();
+            else {
+                EditItemWindow<Client> clientWindow = new EditItemWindow<>(new Client(), (Window) getTopLevelAncestor());
+                clientWindow.addWindowListener(new WindowAdapter() {
+                    @Override
+                    public void windowClosing(WindowEvent e) {
+                        itemWindows.remove(WindowType.DETAIL_CLIENT);
+                    }
+                });
+                itemWindows.put(WindowType.DETAIL_CLIENT, clientWindow);
+            }
         });
         jmClients.add(miCreateClient);
 
