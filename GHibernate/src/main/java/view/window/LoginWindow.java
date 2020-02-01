@@ -1,11 +1,14 @@
 package view.window;
 
+import controller.dao.ArticleDAO;
+import controller.dao.ClientDAO;
+import controller.dao.OrderDAO;
 import controller.dao.UserDAO;
-import model.User;
-
+import model.*;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
+import java.math.BigDecimal;
 
 public class LoginWindow extends JFrame {
 

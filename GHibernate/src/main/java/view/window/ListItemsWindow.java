@@ -1,9 +1,6 @@
 package view.window;
 
-import controller.dao.ArticleDAO;
-import controller.dao.CategoryDAO;
-import controller.dao.ClientDAO;
-import controller.dao.PersistenceDAO;
+import controller.dao.*;
 import model.Article;
 import model.Category;
 import model.Client;
@@ -15,6 +12,8 @@ import java.awt.*;
 import java.awt.event.*;
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 import java.util.List;
 
@@ -35,6 +34,8 @@ public class ListItemsWindow<T> extends JDialog {
             dao = new ArticleDAO();
         else if(c.equals(Client.class))
             dao = new ClientDAO();
+        else if(c.equals(Order.class))
+            dao = new OrderDAO();
         this.items = items;
         this.c = c;
         this.fieldsToPrint = Arrays.asList(fieldsToPrint);
@@ -102,7 +103,13 @@ public class ListItemsWindow<T> extends JDialog {
                     if (Modifier.isPrivate(f.getModifiers())) {
                         f.setAccessible(true);
                     }
-                    String info = String.valueOf(f.get(item));
+                    String info = "";
+                    if(LocalDateTime.class.isAssignableFrom(f.getType())){
+                        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yy-MM-dd HH:mm");
+                        info = ((LocalDateTime)f.get(item)).format(formatter);
+                    }else {
+                        info = String.valueOf(f.get(item));
+                    }
                     data[i][j] = info;
                     //                System.out.println("i: " + i + " j : " + j + " field: " + f.getName());
                     j++;
@@ -121,7 +128,7 @@ public class ListItemsWindow<T> extends JDialog {
                 innerTable.addMouseListener(new MouseAdapter() {
                     @Override
                     public void mousePressed(MouseEvent e) {
-                        if (e.getClickCount() != 2)
+                        if (e.getClickCount() != 2 || c.equals(Order.class))
                             return;
                         JTable t = (JTable) e.getSource();
                         Object o = items.get(t.rowAtPoint(e.getPoint()));

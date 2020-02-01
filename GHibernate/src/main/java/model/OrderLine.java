@@ -1,6 +1,7 @@
 package model;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 
 import javax.persistence.*;
 
@@ -20,7 +21,7 @@ public class OrderLine {
 	@Column(name = "precio")
 	private BigDecimal price = BigDecimal.ZERO;
 	@Column(name = "unidades")
-	private BigDecimal ammount = BigDecimal.ONE;
+	private BigDecimal amount = BigDecimal.ONE;
 	@Column(name = "importe")
 	private BigDecimal total = BigDecimal.ZERO;
 	
@@ -28,6 +29,8 @@ public class OrderLine {
 	
 	public OrderLine(Order order) {
 		this.order = order;
+		if(order.getOrderLines() == null)
+			order.setOrderLines(new ArrayList<>());
 		order.getOrderLines().add(this);
 	}
 	
@@ -43,7 +46,6 @@ public class OrderLine {
 
 	public void setArticulo(Article articulo) {
 		price = articulo.getPrice();
-		ammount = BigDecimal.ONE;
 		this.article = articulo;
 	}
 
@@ -55,18 +57,20 @@ public class OrderLine {
 		this.price = price;
 	}
 
-	public BigDecimal getAmmount() {
-		return ammount;
+	public BigDecimal getAmount() {
+		return amount;
 	}
 
-	public void setAmmount(BigDecimal ammount) {
-		this.ammount = ammount;
+	public void setAmount(BigDecimal amount) {
+		this.amount = amount;
 	}
 
 	@PrePersist
 	@PreUpdate
 	private void preGetImporte() {
-		total = price.multiply(ammount);
+		System.out.println("PRICE" + price.toString());
+		System.out.println("AMOUNT: " + amount.toString());
+		total = price.multiply(amount);
 	}
 	public BigDecimal getImporte() {
 		preGetImporte();

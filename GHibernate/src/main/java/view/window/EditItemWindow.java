@@ -1,13 +1,8 @@
 package view.window;
 
-import controller.dao.ArticleDAO;
-import controller.dao.CategoryDAO;
-import controller.dao.ClientDAO;
-import controller.dao.PersistenceDAO;
-import model.Article;
-import model.Category;
-import model.Client;
-import model.EditableItem;
+import controller.dao.*;
+import model.*;
+
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
@@ -65,9 +60,12 @@ public class EditItemWindow<T> extends JDialog {
         }else if(receivedObject instanceof Article){
             this.c = Article.class;
             this.dao = new ArticleDAO();
-        }else{
+        }else if(receivedObject instanceof Client){
             this.c = Client.class;
             this.dao = new ClientDAO();
+        }else{
+            this.c = Order.class;
+            this.dao = new OrderDAO();
         }
         init();
         if(id != null) {

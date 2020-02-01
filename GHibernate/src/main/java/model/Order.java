@@ -9,7 +9,7 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "pedido")
-public class Order {
+public class Order implements EditableItem{
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -40,7 +40,6 @@ public class Order {
 		return date;
 	}
 
-	//Gracias Luis por estas anotaciones, super útiles y no las conocía :D
 	@PrePersist
 	@PreUpdate
 	private void preGetImporte() {
@@ -60,5 +59,9 @@ public class Order {
 
 	public List<OrderLine> getOrderLines() {
 		return orderLines;
+	}
+
+	public void setOrderLines(List<OrderLine> orderLines){
+		this.orderLines = orderLines;
 	}
 }

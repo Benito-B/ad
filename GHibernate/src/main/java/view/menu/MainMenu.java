@@ -114,8 +114,10 @@ public class MainMenu extends JMenuBar{
         miListOrders.addActionListener(new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                //TODO sacar pedidos de la DB
-                //TODO crear ventana para mostrar pedidos
+                OrderDAO dao = new OrderDAO();
+                List<Order> orders = dao.getAll();
+                String[] fieldsToPrint = {"id", "client", "date", "total"};
+                ListItemsWindow<Order> ordersWindow = new ListItemsWindow<>(orders, Order.class, fieldsToPrint);
             }
         });
         jmOrders.add(miListOrders);
