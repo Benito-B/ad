@@ -15,7 +15,7 @@ public class Order implements EditableItem{
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	@Column(name = "fecha")
-	private LocalDateTime date = LocalDateTime.now();
+	private LocalDateTime date;
 	@Column(name = "importe")
 	private BigDecimal total = BigDecimal.ZERO;
 	@ManyToOne
@@ -25,19 +25,26 @@ public class Order implements EditableItem{
 	private List<OrderLine> orderLines = new ArrayList<>();
 
 
-	private Order() {}
-	
-	public Order(Client client) {
-		this.client = client;
-	}
-
+	public Order() {}
 
 	public Long getId() {
 		return id;
 	}
 
+	public void setDate(LocalDateTime date){
+		this.date = date;
+	}
+
 	public LocalDateTime getDate() {
 		return date;
+	}
+
+	public void setClient(Client client) {
+		this.client = client;
+	}
+
+	public Client getClient() {
+		return client;
 	}
 
 	@PrePersist
@@ -51,10 +58,6 @@ public class Order implements EditableItem{
 	public BigDecimal getTotal() {
 		preGetImporte();
 		return total;
-	}
-
-	public Client getClient() {
-		return client;
 	}
 
 	public List<OrderLine> getOrderLines() {

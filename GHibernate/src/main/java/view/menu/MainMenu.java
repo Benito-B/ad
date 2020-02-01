@@ -5,6 +5,7 @@ import model.*;
 import view.WindowType;
 import view.window.EditItemWindow;
 import view.window.ListItemsWindow;
+import view.window.NewOrderWindow;
 
 import javax.swing.*;
 import java.awt.*;
@@ -121,6 +122,17 @@ public class MainMenu extends JMenuBar{
             }
         });
         jmOrders.add(miListOrders);
+        JMenuItem miCreateOrder = new JMenuItem("Nuevo pedido");
+        miCreateOrder.addActionListener(e -> {
+            NewOrderWindow orderWindow = new NewOrderWindow((Window)getTopLevelAncestor());
+            orderWindow.addWindowListener(new WindowAdapter() {
+                @Override
+                public void windowClosing(WindowEvent e) {
+                    itemWindows.remove(WindowType.DETAIL_ARTICLE);
+                }
+            });
+        });
+        jmOrders.add(miCreateOrder);
 
         //Creo el submenú de Clientes
         JMenu jmClients = new JMenu("Clientes");
