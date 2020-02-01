@@ -1,10 +1,9 @@
 package view.window;
 
+import controller.Utils;
 import controller.dao.*;
-import model.Article;
-import model.Category;
-import model.Client;
-import model.Order;
+import model.*;
+import view.dialog.MessageDialogHelper;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -26,8 +25,9 @@ public class ListItemsWindow<T> extends JDialog {
     private JScrollPane scrollPane;
     private PersistenceDAO dao;
     private JButton btDelete;
+    private User loggedUser;
 
-    public ListItemsWindow(List<T> items, Class c, String[] fieldsToPrint){
+    public ListItemsWindow(List<T> items, Class c, String[] fieldsToPrint, User loggedUser){
         if(c.equals(Category.class))
             dao = new CategoryDAO();
         else if(c.equals(Article.class))
@@ -39,6 +39,7 @@ public class ListItemsWindow<T> extends JDialog {
         this.items = items;
         this.c = c;
         this.fieldsToPrint = Arrays.asList(fieldsToPrint);
+        this.loggedUser = loggedUser;
         init();
         pack();
         this.setAlwaysOnTop(true);
@@ -63,7 +64,10 @@ public class ListItemsWindow<T> extends JDialog {
         JButton backButton = new JButton("Nuevo objeto");
         backButton.addActionListener(e -> {
             try {
-                EditItemWindow<T> itemWindow = new EditItemWindow<>(c.newInstance(), ListItemsWindow.this);
+                if(c.equals(Order.class))
+                    new NewOrderWindow();
+                else
+                    new EditItemWindow<>(c.newInstance(), ListItemsWindow.this);
             } catch (InstantiationException | IllegalAccessException ex) {
                 ex.printStackTrace();
             }
@@ -71,8 +75,14 @@ public class ListItemsWindow<T> extends JDialog {
         buttonPanel.add(backButton);
         btDelete = new JButton("Borrar seleccionado");
         btDelete.addActionListener(e -> {
+            if(Utils.isAdminOnly(c) && !loggedUser.isAdmin()){
+                MessageDialogHelper.ShowErrorMessage("Acceso restringido", "Solo administradores.");
+                return;
+            }
+            System.out.println("DELETING?");
             int selectedRow = innerTable.getSelectedRow();
-            if(selectedRow > 0 && selectedRow < innerTable.getRowCount()) {
+            if(selectedRow > -1 && selectedRow < innerTable.getRowCount()) {
+                System.out.println("DEFINETELY DELETING");
                 T object = items.get(selectedRow);
                 dao.delete(object);
                 items.remove(object);

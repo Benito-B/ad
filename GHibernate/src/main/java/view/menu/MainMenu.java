@@ -35,7 +35,7 @@ public class MainMenu extends JMenuBar{
             if(itemWindows.containsKey(WindowType.LIST_CATEGORY))
                 itemWindows.get(WindowType.LIST_CATEGORY).requestFocus();
             else {
-                ListItemsWindow<Category> categoryWindow = new ListItemsWindow<>(categories, Category.class, fieldsToPrint);
+                ListItemsWindow<Category> categoryWindow = new ListItemsWindow<>(categories, Category.class, fieldsToPrint, loggedUser);
                 categoryWindow.addWindowListener(new WindowAdapter() {
                     @Override
                     public void windowClosing(WindowEvent e) {
@@ -77,7 +77,7 @@ public class MainMenu extends JMenuBar{
                 if(itemWindows.containsKey(WindowType.LIST_ARTICLE))
                     itemWindows.get(WindowType.LIST_ARTICLE).requestFocus();
                 else{
-                    ListItemsWindow<Article> articlesWindow = new ListItemsWindow<>(articles, Article.class, fieldsToPrint);
+                    ListItemsWindow<Article> articlesWindow = new ListItemsWindow<>(articles, Article.class, fieldsToPrint, loggedUser);
                     articlesWindow.addWindowListener(new WindowAdapter() {
                         @Override
                         public void windowClosing(WindowEvent e) {
@@ -117,7 +117,7 @@ public class MainMenu extends JMenuBar{
                 OrderDAO dao = new OrderDAO();
                 List<Order> orders = dao.getAll();
                 String[] fieldsToPrint = {"id", "client", "date", "total"};
-                ListItemsWindow<Order> ordersWindow = new ListItemsWindow<>(orders, Order.class, fieldsToPrint);
+                ListItemsWindow<Order> ordersWindow = new ListItemsWindow<>(orders, Order.class, fieldsToPrint, loggedUser);
             }
         });
         jmOrders.add(miListOrders);
@@ -136,7 +136,7 @@ public class MainMenu extends JMenuBar{
                 if(itemWindows.containsKey(WindowType.LIST_CLIENT))
                     itemWindows.get(WindowType.LIST_CLIENT).requestFocus();
                 else {
-                    ListItemsWindow<Client> clientsWindow = new ListItemsWindow<>(clients, Client.class, fieldsToPrint);
+                    ListItemsWindow<Client> clientsWindow = new ListItemsWindow<>(clients, Client.class, fieldsToPrint, loggedUser);
                     clientsWindow.addWindowListener(new WindowAdapter() {
                         @Override
                         public void windowClosing(WindowEvent e) {
@@ -172,7 +172,7 @@ public class MainMenu extends JMenuBar{
             miListUsers.addActionListener(evt -> {
                 UserDAO userDAO = new UserDAO();
                 String[] fieldsToPrint = {"userId", "username", "isAdmin"};
-                ListItemsWindow<User> userWindow = new ListItemsWindow<>(userDAO.getAll(), User.class, fieldsToPrint);
+                ListItemsWindow<User> userWindow = new ListItemsWindow<>(userDAO.getAll(), User.class, fieldsToPrint, loggedUser);
             });
             jmUsers.add(miListUsers);
             this.add(jmUsers);
