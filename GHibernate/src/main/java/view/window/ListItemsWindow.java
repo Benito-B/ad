@@ -1,5 +1,6 @@
 package view.window;
 
+import controller.RowFilterUtil;
 import controller.Utils;
 import controller.dao.*;
 import model.*;
@@ -26,6 +27,7 @@ public class ListItemsWindow<T> extends JDialog {
     private PersistenceDAO dao;
     private JButton btDelete;
     private User loggedUser;
+    private JPanel base;
 
     public ListItemsWindow(List<T> items, Class c, String[] fieldsToPrint, User loggedUser){
         if(c.equals(Category.class))
@@ -49,13 +51,13 @@ public class ListItemsWindow<T> extends JDialog {
     }
 
     private void init(){
-        JPanel base = new JPanel();
+        base = new JPanel();
         this.add(base);
         base.setLayout(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.fill = GridBagConstraints.BOTH;
         gbc.gridx = 0;
-        gbc.gridy = 0;
+        gbc.gridy = 1;
         reloadData(items);
         scrollPane = new JScrollPane(innerTable);
         base.add(scrollPane, gbc);
@@ -65,7 +67,7 @@ public class ListItemsWindow<T> extends JDialog {
         backButton.addActionListener(e -> {
             try {
                 if(c.equals(Order.class))
-                    new NewOrderWindow();
+                    new NewOrderWindow(this);
                 else
                     new EditItemWindow<>(c.newInstance(), ListItemsWindow.this);
             } catch (InstantiationException | IllegalAccessException ex) {
@@ -79,11 +81,11 @@ public class ListItemsWindow<T> extends JDialog {
                 MessageDialogHelper.ShowErrorMessage("Acceso restringido", "Solo administradores.");
                 return;
             }
-            System.out.println("DELETING?");
             int selectedRow = innerTable.getSelectedRow();
-            if(selectedRow > -1 && selectedRow < innerTable.getRowCount()) {
-                System.out.println("DEFINETELY DELETING");
+            selectedRow = innerTable.convertRowIndexToModel(selectedRow);
+            if(selectedRow > -1 && selectedRow < innerTable.getModel().getRowCount()) {
                 T object = items.get(selectedRow);
+                ((DefaultTableModel)innerTable.getModel()).removeRow(selectedRow);
                 dao.delete(object);
                 items.remove(object);
                 reloadData(items);
@@ -93,7 +95,7 @@ public class ListItemsWindow<T> extends JDialog {
         buttonPanel.add(btDelete);
         gbc.fill = GridBagConstraints.BOTH;
         gbc.gridx = 0;
-        gbc.gridy = 1;
+        gbc.gridy = 2;
         base.add(buttonPanel, gbc);
     }
 
@@ -132,6 +134,21 @@ public class ListItemsWindow<T> extends JDialog {
             }else{
                 DefaultTableModel dtm = new DefaultTableModel(data, fieldsToPrint.toArray());
                 innerTable = new JTable(dtm);
+                JTextField filterField = RowFilterUtil.createRowFilter(innerTable);
+                GridBagConstraints gbc = new GridBagConstraints();
+                JPanel filterPanel = new JPanel();
+                filterPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
+                gbc.fill = GridBagConstraints.BOTH;
+                gbc.gridx = 0;
+                gbc.gridy = 0;
+                base.add(filterPanel, gbc);
+                filterPanel.add(new JLabel("Filtro: \t"));
+                filterPanel.add(filterField);
+                JButton btClearFilter = new JButton("Borrar filtro");
+                btClearFilter.addActionListener(e -> {
+                    filterField.setText("");
+                });
+                filterPanel.add(btClearFilter);
                 innerTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
                 innerTable.setFillsViewportHeight(true);
                 innerTable.setDefaultEditor(Object.class, null);
