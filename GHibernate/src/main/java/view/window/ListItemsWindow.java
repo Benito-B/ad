@@ -22,6 +22,7 @@ public class ListItemsWindow<T> extends JDialog {
     private Class c;
     private List<String> fieldsToPrint;
     private JTable innerTable;
+    private DefaultTableModel detailTableModel;
     private JScrollPane scrollPane;
     private PersistenceDAO dao;
     private JButton btDelete;
@@ -59,21 +60,42 @@ public class ListItemsWindow<T> extends JDialog {
         gbc.gridy = 1;
         reloadData(items);
         scrollPane = new JScrollPane(innerTable);
+        scrollPane.setPreferredSize(new Dimension(scrollPane.getSize().width,250));
+        scrollPane.setMaximumSize(new Dimension(base.getSize().width,250));
         base.add(scrollPane, gbc);
+        if(c.equals(Order.class)){
+            gbc.fill = GridBagConstraints.BOTH;
+            gbc.gridx = 0;
+            gbc.gridy = 2;
+            detailTableModel = new DefaultTableModel();
+            JTable detailTable = new JTable(detailTableModel);
+            detailTable.setFillsViewportHeight(true);
+            JScrollPane detailScrollPane = new JScrollPane(detailTable);
+            detailScrollPane.setPreferredSize(new Dimension(scrollPane.getSize().width,200));
+            detailScrollPane.setMaximumSize(new Dimension(base.getSize().width,200));
+            base.add(detailScrollPane, gbc);
+        }
         JPanel buttonPanel = new JPanel();
         buttonPanel.setLayout(new GridLayout(1, 2));
-        JButton backButton = new JButton("Nuevo objeto");
-        backButton.addActionListener(e -> {
+        JButton newItemButton = new JButton("Nuevo objeto");
+        newItemButton.addActionListener(e -> {
             try {
-                if(c.equals(Order.class))
-                    new NewOrderWindow(this);
+                if(c.equals(Order.class)) {
+                    NewOrderWindow newOrderWindow = new NewOrderWindow(ListItemsWindow.this);
+                    newOrderWindow.addWindowListener(new WindowAdapter() {
+                        @Override
+                        public void windowClosed(WindowEvent e) {
+                            ListItemsWindow.this.reloadData(items);
+                        }
+                    });
+                }
                 else
                     new EditItemWindow<>(c.newInstance(), ListItemsWindow.this);
             } catch (InstantiationException | IllegalAccessException ex) {
                 ex.printStackTrace();
             }
         });
-        buttonPanel.add(backButton);
+        buttonPanel.add(newItemButton);
         btDelete = new JButton("Borrar seleccionado");
         btDelete.addActionListener(e -> {
             if(Utils.isAdminOnly(c) && !loggedUser.isAdmin()){
@@ -94,7 +116,7 @@ public class ListItemsWindow<T> extends JDialog {
         buttonPanel.add(btDelete);
         gbc.fill = GridBagConstraints.BOTH;
         gbc.gridx = 0;
-        gbc.gridy = 2;
+        gbc.gridy = 3;
         base.add(buttonPanel, gbc);
     }
 
@@ -154,10 +176,15 @@ public class ListItemsWindow<T> extends JDialog {
                 innerTable.addMouseListener(new MouseAdapter() {
                     @Override
                     public void mousePressed(MouseEvent e) {
+                        if(c.equals(Order.class) && e.getClickCount() == 1){
+                            int pos = innerTable.convertRowIndexToModel(innerTable.rowAtPoint(e.getPoint()));
+                            Object o = items.get(pos);
+                            showLinesData((Order)o);
+                        }
                         if (e.getClickCount() != 2 || c.equals(Order.class))
                             return;
-                        JTable t = (JTable) e.getSource();
-                        Object o = items.get(t.rowAtPoint(e.getPoint()));
+                        int pos = innerTable.convertRowIndexToModel(innerTable.rowAtPoint(e.getPoint()));
+                        Object o = items.get(pos);
                         new EditItemWindow<>(o, ListItemsWindow.this);
                     }
 
@@ -172,4 +199,21 @@ public class ListItemsWindow<T> extends JDialog {
             e.printStackTrace();
         }
     }
+
+    private void showLinesData(Order order){
+        String[] columns = {"id", "Artículo", "Precio", "Cantidad", "Total"};
+        String[][] data = new String[order.getOrderLines().size()][5];
+        int i = 0;
+        for(OrderLine ol: order.getOrderLines()){
+            data[i][0] = ol.getId().toString();
+            data[i][1] = ol.getArticulo().getName();
+            data[i][2] = ol.getPrice().toString();
+            data[i][3] = ol.getAmount().toString();
+            data[i][4] = ol.getImporte().toString();
+            i++;
+        }
+        detailTableModel.setRowCount(0);
+        detailTableModel.setDataVector(data, columns);
+    }
+
 }

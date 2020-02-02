@@ -1,7 +1,7 @@
 package view.tablemodel;
 
-import javax.swing.event.TableModelEvent;
-import javax.swing.event.TableModelListener;
+import model.Article;
+
 import javax.swing.table.DefaultTableModel;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -18,22 +18,26 @@ public class OrderLineTableModel extends DefaultTableModel {
 
     public OrderLineTableModel(Object rowData[][]){
         super(rowData, columnNames);
-        this.addTableModelListener(new TableModelListener() {
-            @Override
-            public void tableChanged(TableModelEvent e) {
-                if(e.getColumn() > -1) {
-                    int row = e.getFirstRow();
-                    Vector oldVector = (Vector) getDataVector().elementAt(row);
-                    BigDecimal amount = BigDecimal.valueOf(Double.parseDouble((String)oldVector.get(1)));
-                    BigDecimal price = BigDecimal.valueOf(Double.parseDouble((String)oldVector.get(2)));
-                    BigDecimal total = amount.multiply(price);
-                    oldVector.set(3, total.setScale(2, RoundingMode.HALF_UP).toString());
-                    getDataVector().set(row, oldVector);
-                    fireTableDataChanged();
-                }
+        this.addTableModelListener(e -> {
+            if(e.getColumn() > -1) {
+                int row = e.getFirstRow();
+                Vector oldVector = (Vector) getDataVector().elementAt(row);
+                BigDecimal amount = BigDecimal.valueOf(Double.parseDouble(oldVector.get(1).toString()));
+                BigDecimal price = BigDecimal.valueOf(Double.parseDouble(oldVector.get(2).toString()));
+                BigDecimal total = amount.multiply(price);
+                oldVector.set(3, total.setScale(2, RoundingMode.HALF_UP).toString());
+                getDataVector().set(row, oldVector);
+                fireTableDataChanged();
             }
         });
     }
+
+    @Override
+    public Class<?> getColumnClass(int columnIndex) {
+        return getValueAt(0, columnIndex).getClass();
+    }
+
+
 
     @Override
     public boolean isCellEditable(int row, int column) {

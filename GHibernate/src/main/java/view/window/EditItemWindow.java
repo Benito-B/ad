@@ -149,6 +149,7 @@ public class EditItemWindow<T> extends JDialog {
         pack();
         this.setAlwaysOnTop(true);
         this.setResizable(false);
+        this.setLocationRelativeTo(null);
         this.setVisible(true);
     }
 
