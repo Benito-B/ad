@@ -118,19 +118,35 @@ public class MainMenu extends JMenuBar{
                 OrderDAO dao = new OrderDAO();
                 List<Order> orders = dao.getAll();
                 String[] fieldsToPrint = {"id", "client", "date", "total"};
-                ListItemsWindow<Order> ordersWindow = new ListItemsWindow<>(orders, Order.class, fieldsToPrint, loggedUser);
+                if(itemWindows.containsKey(WindowType.LIST_ORDER))
+                    itemWindows.get(WindowType.LIST_ORDER).requestFocus();
+                else{
+                    ListItemsWindow<Order> ordersWindow = new ListItemsWindow<>(orders, Order.class, fieldsToPrint, loggedUser);
+                    ordersWindow.addWindowListener(new WindowAdapter() {
+                        @Override
+                        public void windowClosing(WindowEvent e) {
+                            itemWindows.remove(WindowType.LIST_ORDER);
+                        }
+                    });
+                    itemWindows.put(WindowType.LIST_ORDER, ordersWindow);
+                }
             }
         });
         jmOrders.add(miListOrders);
         JMenuItem miCreateOrder = new JMenuItem("Nuevo pedido");
         miCreateOrder.addActionListener(e -> {
-            NewOrderWindow orderWindow = new NewOrderWindow((Window)getTopLevelAncestor());
-            orderWindow.addWindowListener(new WindowAdapter() {
-                @Override
-                public void windowClosing(WindowEvent e) {
-                    itemWindows.remove(WindowType.DETAIL_ARTICLE);
-                }
-            });
+            if(itemWindows.containsKey(WindowType.DETAIL_ORDER))
+                itemWindows.get(WindowType.DETAIL_ORDER).requestFocus();
+            else {
+                NewOrderWindow orderWindow = new NewOrderWindow((Window) getTopLevelAncestor());
+                orderWindow.addWindowListener(new WindowAdapter() {
+                    @Override
+                    public void windowClosing(WindowEvent e) {
+                        itemWindows.remove(WindowType.DETAIL_ORDER);
+                    }
+                });
+                itemWindows.put(WindowType.DETAIL_ORDER, orderWindow);
+            }
         });
         jmOrders.add(miCreateOrder);
 
