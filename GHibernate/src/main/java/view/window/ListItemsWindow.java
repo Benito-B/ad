@@ -70,6 +70,7 @@ public class ListItemsWindow<T> extends JDialog {
             detailTableModel = new DefaultTableModel();
             JTable detailTable = new JTable(detailTableModel);
             detailTable.setFillsViewportHeight(true);
+            detailTable.setDefaultEditor(Object.class, null);
             JScrollPane detailScrollPane = new JScrollPane(detailTable);
             detailScrollPane.setPreferredSize(new Dimension(scrollPane.getSize().width,200));
             detailScrollPane.setMaximumSize(new Dimension(base.getSize().width,200));
@@ -176,10 +177,14 @@ public class ListItemsWindow<T> extends JDialog {
                 innerTable.addMouseListener(new MouseAdapter() {
                     @Override
                     public void mousePressed(MouseEvent e) {
+                        int cId = innerTable.rowAtPoint(e.getPoint());
+                        if(cId == -1)
+                            return;
                         if(c.equals(Order.class) && e.getClickCount() == 1){
-                            int pos = innerTable.convertRowIndexToModel(innerTable.rowAtPoint(e.getPoint()));
+                            int pos = innerTable.convertRowIndexToModel(cId);
                             Object o = items.get(pos);
                             showLinesData((Order)o);
+                            return;
                         }
                         if (e.getClickCount() != 2 || c.equals(Order.class))
                             return;
